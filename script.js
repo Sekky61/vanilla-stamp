@@ -1,6 +1,6 @@
 import { CodeGen } from './codegen.js';
 
-let gen = new CodeGen();
+let gen = new CodeGen({ function_wrap: true });
 console.log("Loaded");
 
 const html_area = document.getElementById("html_area");

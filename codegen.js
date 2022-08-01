@@ -1,10 +1,23 @@
 // JS generating class
 export class CodeGen {
-    constructor() {
+
+    // Options:
+    // function_wrap - bool - if true, generated code will be inside a function
+    constructor(options = {}) {
+
         this.used_counter = {};
 
-        // todo load options such as:
-        // generate code inside a fuction
+        // TODO indent spaces/tabs (and number of them)
+
+        // TODO maybe just save options object
+        if ('function_wrap' in options) {
+            let val = options.function_wrap;
+            if (typeof val === "boolean") {
+                this.function_wrap = val;
+            }
+        } else {
+            this.function_wrap = false;
+        }
     }
 
     reset_context() {
@@ -13,7 +26,7 @@ export class CodeGen {
 
     // Param html_string: string, HTML snippet
     // Returns code
-    // If html_string is not well-formed, returns false
+    // If html_string is not well-formed, returns null
     generate(html_string) {
         this.reset_context();
 
@@ -26,19 +39,34 @@ export class CodeGen {
         console.dir(template_content);
         if (template_content.children.length !== 1) {
             // Input doesn't have one root node
-            console.error("No children parsing error");
-            return "";
+            console.log("No children parsing error");
+            return null;
         }
 
         let target = template_content.firstElementChild; // The root node of input html
 
         if (!target) {
-            console.error("Parsing error");
-            return "";
+            console.log("Parsing error");
+            return null;
+        }
+
+        let output = "";
+
+        // Optionally wrap code in function
+        if (this.function_wrap) {
+            output = output.concat("function f() {\n");
         }
 
         let code = this.analyze(target);
-        return code;
+        output = output.concat(code);
+
+        // Return and close function
+        if (this.function_wrap) {
+            output = output.concat(this.gen_return(target.codegen_varname));
+            output = output.concat("}\n");
+        }
+
+        return output;
     }
 
     analyze(root_element) {
@@ -47,8 +75,11 @@ export class CodeGen {
         return js_code;
     }
 
+    // Generates code for el and recursively calls for all children
     generate_js(el) {
         let el_code = this.generate_node(el);
+        el_code = el_code.concat("\n");
+
         for (const child of el.children) {
             let child_js = this.generate_js(child);
             el_code = el_code.concat(child_js);
@@ -56,20 +87,49 @@ export class CodeGen {
         return el_code;
     }
 
+    // Returns JS code recreating el with its attributes
     generate_node(el) {
         // Generate name for node
         let s = "";
         let var_name = this.get_var_name(el);
-        get_parents_var_name(el);
 
-        // Save the name to the Node object
-        el.codegen_varname = var_name;
+        el.codegen_varname = var_name; // Save the name to the Node object
 
-        s = s.concat(`let ${var_name} = document.createElement("${el.tagName}")\n`);
+        let parent_var_name = get_parents_var_name(el);
+
+        s = s.concat(this.gen_createelement(var_name, el.tagName));
         for (const attr of el.attributes) {
-            s = s.concat(`Attr ${attr.name} - ${attr.value}\n`);
+            s = s.concat(this.gen_setattribute(var_name, attr.name, attr.value));
+        }
+
+        // Add element to its parent, if not root
+        if (parent_var_name !== null) {
+            s = s.concat(this.gen_appendchild(var_name, parent_var_name));
         }
         return s;
+    }
+
+    gen_createelement(var_name, el_tag) {
+        return this.format_line(`let ${var_name} = document.createElement("${el_tag}");\n`);
+    }
+
+    gen_setattribute(var_name, attr_name, attr_value) {
+        // Attribute value can be JS, so should be stringified in generated code
+        return this.format_line(`${var_name}.setAttribute("${attr_name}", "${attr_value}");\n`);
+    }
+
+    gen_appendchild(var_name, parent_var_name) {
+        return this.format_line(`${parent_var_name}.appendChild(${var_name});\n`);
+    }
+
+    gen_return(var_name) {
+        return this.format_line(`return ${var_name};\n`);
+    }
+
+    // Adds padding in front of the line, if opted in
+    format_line(line) {
+        // todo formatting options here
+        return `${this.function_wrap ? "\t" : ""}${line}`;
     }
 
     get_var_name(el) {
