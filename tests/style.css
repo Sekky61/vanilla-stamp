@@ -1,0 +1,24 @@
+.test_row {
+    background-color: aquamarine;
+    margin: 5px;
+    padding: 5px;
+    border-radius: 5px;
+}
+
+.test_desc {
+    font-size: 16pt;
+}
+
+.test_status {
+    margin-top: 5px;
+}
+
+/* Conditional styling for successful and failed tests */
+
+.test_success {
+    color: green;
+}
+
+.test_failure {
+    color: red;
+}

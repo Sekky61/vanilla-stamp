@@ -39,7 +39,6 @@ export class CodeGen {
         console.dir(template_content);
         if (template_content.children.length !== 1) {
             // Input doesn't have one root node
-            console.log("No children parsing error");
             return null;
         }
 
