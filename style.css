@@ -1,0 +1,31 @@
+textarea {
+    resize: none;
+}
+
+.half {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
+#samples {
+    display: flex;
+    gap: 5px;
+}
+
+.js_area_cont {
+    position: relative;
+    /* Temporary */
+    display: inline-block;
+}
+
+.js_area_cont textarea {
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+}
+
+.js_area_cont button {
+    position: absolute;
+    top: 3px;
+    right: 3px;
+}

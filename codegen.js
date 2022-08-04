@@ -131,8 +131,10 @@ export class CodeGen {
         return `${this.function_wrap ? "\t" : ""}${line}`;
     }
 
+    // Generates name for variable pointing to HTML node
+    // ex: var pointing to <p> will be named p_0
     get_var_name(el) {
-        let el_tag = el.tagName;
+        let el_tag = el.nodeName.toLowerCase(); // nodeName is capitalized
         let times_used = this.used_counter[el_tag];
         if (times_used === undefined) {
             this.used_counter[el_tag] = 1;

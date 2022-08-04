@@ -5,13 +5,29 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
     <title>vanilla-stamp</title>
 </head>
 
 <body>
     <p>Copy HTML snippet into the left text area.</p>
-    <textarea name="a1" id="html_area" cols="60" rows="20"></textarea>
-    <textarea name="a2" id="js_area" cols="60" rows="20"></textarea>
+    <div class="half">
+        <div class="left">
+            <textarea name="a1" id="html_area" cols="60" rows="20"></textarea>
+            <div id="samples">
+                <button id="sample_1">Sample 1</button>
+                <button id="sample_2">Sample 2</button>
+                <button id="sample_3">Sample 3</button>
+            </div>
+        </div>
+        <div class="right">
+            <div class="js_area_cont">
+                <textarea name="a2" id="js_area" cols="60" rows="20" readonly></textarea>
+                <button id="copy_code">Copy</button>
+            </div>
+            <div class="gen_options"></div>
+        </div>
+    </div>
     <div id="stub">
 
     </div>
