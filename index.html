@@ -13,6 +13,9 @@
     <p>Copy HTML snippet into the left text area.</p>
     <div class="half">
         <div class="left">
+            <div>
+                Input HTML
+            </div>
             <textarea name="a1" id="html_area" cols="60" rows="20"></textarea>
             <div id="samples">
                 <button id="sample_1">Sample 1</button>
@@ -21,15 +24,32 @@
             </div>
         </div>
         <div class="right">
+            <div>
+                Generated code
+            </div>
             <div class="js_area_cont">
                 <textarea name="a2" id="js_area" cols="60" rows="20" readonly></textarea>
                 <button id="copy_code">Copy</button>
             </div>
-            <div class="gen_options"></div>
+            <div id="gen_options">
+                <fieldset>
+                    <legend>Generation options</legend>
+                    <div>
+                        <input type="checkbox" id="function_wrap" name="function_wrap">
+                        <label for="function_wrap">Wrap code in a function</label>
+                    </div>
+                    <div>
+                        <input type="checkbox" id="indent_type" name="indent_type">
+                        <label for="indent_type">Use tabs</label>
+                    </div>
+                    <div>
+                        <label for="space_count">Indent using</label>
+                        <input type="number" id="space_count" name="space_count">
+                        <label for="space_count">space(s)</label>
+                    </div>
+                </fieldset>
+            </div>
         </div>
-    </div>
-    <div id="stub">
-
     </div>
     <script src="script.js" type="module"></script>
 </body>

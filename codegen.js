@@ -1,23 +1,60 @@
+
+// TODO is exporting this needed to catch it?
+class CodeGenError extends Error {
+    constructor(message) {
+        super(message); // (1)
+        this.name = "CodeGenError"; // (2)
+    }
+}
+
 // JS generating class
 export class CodeGen {
 
+    // Constructor
+    // Invalid values will be rejected by throwing CodeGenError.
+    //
     // Options:
-    // function_wrap - bool - if true, generated code will be inside a function
-    constructor(options = {}) {
-
+    // Name             | Type      | Default   | Description
+    // function_wrap    | bool      | true      | if true, generated code will be inside a function
+    // indent_type      | string    | "tabs"    | "tabs" or "spaces". Option "spaces" requires field space_count
+    // space_count      | number    | 4         | number (>0) of spaces used in spac indentation
+    constructor(user_options) {
+        // Used for generating variable names
         this.used_counter = {};
 
-        // TODO indent spaces/tabs (and number of them)
+        // Defaults
+        let options = {
+            function_wrap: true,
+            indent_type: "tabs",
+            space_count: 4
+        };
+        Object.assign(options, user_options);
 
-        // TODO maybe just save options object
-        if ('function_wrap' in options) {
-            let val = options.function_wrap;
-            if (typeof val === "boolean") {
-                this.function_wrap = val;
+        console.dir(options);
+
+        let val = options.function_wrap;
+        if (typeof val === "boolean") {
+            this.function_wrap = val;
+        } else {
+            throw new CodeGenError(`Invalid argument function_wrap: ${options.function_wrap}`);
+        }
+
+        // Indentation
+        if (options.indent_type === "tabs") {
+            this.indent_type = "tabs";
+            this.indent_str = "\t";
+        } else if (options.indent_type === "spaces") {
+            this.indent_type = "spaces";
+            if (options.space_count && typeof options.space_count === "number" && options.space_count > 0) {
+                this.space_count = options.space_count;
+                this.indent_str = " ".repeat(this.space_count);
+            } else {
+                throw new CodeGenError(`Invalid argument space_count: ${options.space_count}`);
             }
         } else {
-            this.function_wrap = false;
+            throw new CodeGenError(`Invalid argument indent_type: ${options.indent_type}`);
         }
+
     }
 
     reset_context() {
@@ -127,8 +164,7 @@ export class CodeGen {
 
     // Adds padding in front of the line, if opted in
     format_line(line) {
-        // todo formatting options here
-        return `${this.function_wrap ? "\t" : ""}${line}`;
+        return `${this.function_wrap ? this.indent_str : ""}${line}`;
     }
 
     // Generates name for variable pointing to HTML node

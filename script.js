@@ -4,18 +4,37 @@ console.log("Loaded");
 
 const html_area = document.getElementById("html_area");
 const js_area = document.getElementById("js_area");
-const stub = document.getElementById("stub");
 
-html_area.addEventListener("input", (event) => {
+const gen_options = document.getElementById("gen_options");
+const function_wrap_el = document.getElementById("function_wrap");
+const indent_type_el = document.getElementById("indent_type");
+const space_count_el = document.getElementById("space_count");
+
+// Default
+space_count_el.value = 4;
+
+gen_options.addEventListener("change", gen_code);
+
+html_area.addEventListener("input", gen_code);
+
+function gen_code() {
     let html = html_area.value;
 
-    let gen = new CodeGen({ function_wrap: true });
+    // Get options
+    let function_wrap = function_wrap_el.checked;
+    let indent_type = indent_type_el.checked ? "tabs" : "spaces";
+    console.dir(space_count_el)
+    let space_count = space_count_el.valueAsNumber;
+    console.log(`Gencode called, ${function_wrap}`);
+    console.dir(function_wrap_el);
+
+    let gen = new CodeGen({ function_wrap, indent_type, space_count });
     let code = gen.generate(html);
 
     if (code !== "") {
         js_area.value = code;
     }
-})
+}
 
 // Clipboard copy
 
