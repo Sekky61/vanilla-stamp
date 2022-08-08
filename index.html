@@ -2,56 +2,64 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
-    <title>vanilla-stamp</title>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+  <title>vanilla-stamp</title>
 </head>
 
 <body>
-    <p>Copy HTML snippet into the left text area.</p>
+  <div class="content">
     <div class="half">
-        <div class="left">
-            <div>
-                Input HTML
-            </div>
-            <textarea name="a1" id="html_area" cols="60" rows="20"></textarea>
-            <div id="samples">
-                <button id="sample_1">Sample 1</button>
-                <button id="sample_2">Sample 2</button>
-                <button id="sample_3">Sample 3</button>
-            </div>
+      <div class="left col">
+        <h2>Input HTML</h2>
+        <p>Copy HTML snippet into the left text area.</p>
+        <textarea name="a1" id="html_area" rows="20" placeholder="Type or paste HTML component here..."></textarea>
+        <fieldset id="samples">
+          <legend>Samples</legend>
+          <button id="sample_1">Sample 1</button>
+          <button id="sample_2">Sample 2</button>
+          <button id="sample_3">Sample 3</button>
+        </fieldset>
+      </div>
+      <div class="middle col">
+        <div>
+          <img src="right-arrow.svg" alt="">
         </div>
-        <div class="right">
-            <div>
-                Generated code
-            </div>
-            <div class="js_area_cont">
-                <textarea name="a2" id="js_area" cols="60" rows="20" readonly></textarea>
-                <button id="copy_code">Copy</button>
-            </div>
-            <div id="gen_options">
-                <fieldset>
-                    <legend>Generation options</legend>
-                    <div>
-                        <input type="checkbox" id="function_wrap" name="function_wrap">
-                        <label for="function_wrap">Wrap code in a function</label>
-                    </div>
-                    <div>
-                        <input type="checkbox" id="indent_type" name="indent_type">
-                        <label for="indent_type">Use tabs</label>
-                    </div>
-                    <div>
-                        <label for="space_count">Indent using</label>
-                        <input type="number" id="space_count" name="space_count">
-                        <label for="space_count">space(s)</label>
-                    </div>
-                </fieldset>
-            </div>
+      </div>
+      <div class="right col">
+        <h2>Generated code</h2>
+        <p>JS code creating the DOM structure should appear below.</p>
+        <div class="js_area_cont">
+          <textarea name="a2" id="js_area" rows="20" placeholder="Output" readonly></textarea>
+          <button id="copy_code">Copy</button>
         </div>
+        <div id="gen_options">
+          <fieldset>
+            <legend>Generation options</legend>
+            <div>
+              <input type="checkbox" id="function_wrap" name="function_wrap">
+              <label for="function_wrap">Wrap code in a function</label>
+            </div>
+            <div>
+              <input type="checkbox" id="indent_type" name="indent_type">
+              <label for="indent_type">Use tabs</label>
+            </div>
+            <div>
+              <label for="space_count">Indent using</label>
+              <input type="number" id="space_count" name="space_count">
+              <label for="space_count">space(s)</label>
+            </div>
+          </fieldset>
+        </div>
+      </div>
     </div>
-    <script src="script.js" type="module"></script>
+    <div class="about">
+      <p>About</p>
+    </div>
+  </div>
+  <script src="script.js" type="module"></script>
 </body>
 
 </html>

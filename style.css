@@ -1,10 +1,43 @@
+body {
+    margin: 10px;
+}
+
+.content {
+    max-width: 1200px;
+    margin: auto;
+}
+
 textarea {
     resize: none;
 }
 
 .half {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr 80px 1fr;
+    gap: 10px;
+}
+
+.col {
+    padding: 0px;
+}
+
+.col textarea {
+    box-sizing: border-box;
+    width: 100%;
+    padding: 3px;
+}
+
+.middle {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 80px;
+}
+
+.middle>div {
+    width: 60px;
+    height: 60px;
+    display: inline-block;
 }
 
 #samples {
@@ -13,14 +46,13 @@ textarea {
 }
 
 .js_area_cont {
+    width: 100%;
     position: relative;
     /* Temporary */
     display: inline-block;
 }
 
 .js_area_cont textarea {
-    width: 100%;
-    height: 100%;
     box-sizing: border-box;
 }
 

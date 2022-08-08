@@ -10,8 +10,9 @@ const function_wrap_el = document.getElementById("function_wrap");
 const indent_type_el = document.getElementById("indent_type");
 const space_count_el = document.getElementById("space_count");
 
-// Default
+// Defaults
 space_count_el.value = 4;
+function_wrap_el.checked = true;
 
 gen_options.addEventListener("change", gen_code);
 
@@ -74,6 +75,7 @@ sample_buttons.addEventListener("click", (e) => {
     let target_id = e.target.id;
 
     // Is a sample associated with this ID?
+    // If not, user probably clicked outside a button
     if (target_id in samples) {
         let sample_input = samples[target_id].input;
         html_area.value = sample_input;
@@ -81,7 +83,5 @@ sample_buttons.addEventListener("click", (e) => {
         // Dispatch event to update generated code
         let event = new InputEvent("input");
         html_area.dispatchEvent(event);
-    } else {
-        console.error(`Sample ${target_id} not found.`);
     }
 })
