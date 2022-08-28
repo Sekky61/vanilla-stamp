@@ -1,5 +1,20 @@
+:root {
+    --vanilla: #F3E5AB;
+    --carbon: #232323;
+}
+
 body {
     margin: 10px;
+}
+
+h1 {
+    font-family: 'Comfortaa', cursive;
+    font-weight: 300;
+    color: var(--vanilla);
+}
+
+h1 b {
+    font-weight: 400;
 }
 
 .content {
@@ -31,7 +46,7 @@ textarea {
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 80px;
+    width: 100%;
 }
 
 .middle>div {
@@ -60,4 +75,18 @@ textarea {
     position: absolute;
     top: 3px;
     right: 3px;
+}
+
+.arrow {
+    fill: black;
+}
+
+@media screen and (max-width: 700px) {
+    .half {
+        grid-template-columns: 1fr;
+    }
+
+    .middle {
+        display: none;
+    }
 }
