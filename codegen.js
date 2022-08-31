@@ -138,6 +138,10 @@ export class CodeGen {
             s = s.concat(this.gen_setattribute(var_name, attr.name, attr.value));
         }
 
+        if (el.innerText !== "") {
+            s = s.concat(this.gen_innertext(var_name, el.innerText));
+        }
+
         // Add element to its parent, if not root
         if (parent_var_name !== null) {
             s = s.concat(this.gen_appendchild(var_name, parent_var_name));
@@ -151,7 +155,12 @@ export class CodeGen {
 
     gen_setattribute(var_name, attr_name, attr_value) {
         // Attribute value can be JS, so should be stringified in generated code
-        return this.format_line(`${var_name}.setAttribute("${attr_name}", "${attr_value}");\n`);
+        return this.format_line(`${var_name}.setAttribute("${escape_string(attr_name)}", "${escape_string(attr_value)}");\n`);
+    }
+
+    // todo study http://perfectionkills.com/the-poor-misunderstood-innerText/
+    gen_innertext(var_name, text) {
+        return this.format_line(`${var_name}.innerText = "${escape_string(text)}";\n`);
     }
 
     gen_appendchild(var_name, parent_var_name) {
@@ -191,3 +200,9 @@ function get_parents_var_name(el) {
         return null;
     }
 }
+
+// Add slashes before characters ', " and \
+// Source: https://stackoverflow.com/questions/770523/escaping-strings-in-javascript
+function escape_string(str) {
+    return str.replace(/[\\"']/g, '\\$&').replace(/\u0000/g, '\\0');
+} 

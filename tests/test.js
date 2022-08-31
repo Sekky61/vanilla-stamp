@@ -5,9 +5,11 @@ import { CodeGen } from '../codegen.js';
 function it(desc, fn) {
     // Run function
     let success = true;
+    let error_obj;
     try {
         fn();
     } catch (error) {
+        error_obj = error;
         success = false;
     }
 
@@ -17,7 +19,7 @@ function it(desc, fn) {
     } else {
         console.log('\n');
         console.log('\x1b[31m%s\x1b[0m', '\u2718 ' + desc);
-        console.error(error);
+        console.error(error_obj);
     }
 
     // Report to DOM
@@ -44,6 +46,28 @@ function assert(condition) {
         throw new Error();
     }
 }
+
+function assert_eq(o1, o2) {
+    if (o1 !== o2) {
+        throw new Error();
+    }
+}
+
+function assert_ne(o1, o2) {
+    if (o1 === o2) {
+        throw new Error();
+    }
+}
+
+// var is automatically a window property 
+// (source: https://stackoverflow.com/questions/12743007/can-i-add-attributes-to-window-object-in-javascript)
+var global;
+function set_glob(v) {
+    global = v;
+}
+
+// 
+window.set_glob = set_glob;
 
 // Checks if node has exactly the attributes described in attrs.
 // If node has extra attributes not specified in attrs, returns false.
@@ -97,7 +121,7 @@ it('should reject non-HTML', function () {
 
     let code = gen.generate(`cheese`);
 
-    assert(code === null);
+    assert_eq(code, null);
 });
 
 it('h2 with two attributes', function () {
@@ -107,8 +131,8 @@ it('h2 with two attributes', function () {
     let result = execute(code);
 
     assert(result instanceof HTMLElement);
-    assert(result.nodeName === "H2");
-    assert(result.children.length === 0);
+    assert_eq(result.nodeName, "H2");
+    assert_eq(result.children.length, 0)
     assert(has_exactly_attributes(result, [["onclick", "alert('bar');"], ["w", "king"]]));
 });
 
@@ -119,7 +143,29 @@ it('p with text', function () {
     let result = execute(code);
 
     assert(result instanceof HTMLElement);
-    assert(result.nodeName === "P");
-    assert(result.children.length === 0);
+    console.dir(result)
+    console.log(`----${result.nodeName}`)
+    assert_eq(result.nodeName, "P");
+    assert_eq(result.children.length, 0);
     assert(has_exactly_attributes(result, []));
+});
+
+it('innerText with doublequote', function () {
+    let gen = new CodeGen({ function_wrap: true });
+    let code = gen.generate(`<h2>The "king"</h2>`);
+
+    let result = execute(code);
+    assert_eq(result.innerText, `The \"king\"`);
+});
+
+it('Inline JS works', function () {
+    let gen = new CodeGen({ function_wrap: true });
+    console.dir(document.querySelector('meta[name="secret"]').content);
+    let code = gen.generate(`<h2 onclick="set_glob(document.querySelector('meta[name=&quot;secret&quot;]').content);" >The href Attribute</h2>`);
+
+    let result = execute(code);
+    const event = new Event('click');
+    result.dispatchEvent(event);
+
+    assert_eq(global, "secret_value");
 });
