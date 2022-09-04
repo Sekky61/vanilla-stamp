@@ -159,6 +159,7 @@ export class CodeGen {
     }
 
     // todo study http://perfectionkills.com/the-poor-misunderstood-innerText/
+    // todo check document.createTextNode(str);
     gen_innertext(var_name, text) {
         return this.format_line(`${var_name}.innerText = "${escape_string(text)}";\n`);
     }
