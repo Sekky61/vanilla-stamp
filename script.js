@@ -26,7 +26,6 @@ function gen_code() {
     let indent_type = indent_type_el.checked ? "tabs" : "spaces";
     console.dir(space_count_el)
     let space_count = space_count_el.valueAsNumber;
-    console.log(`Gencode called, ${function_wrap}`);
     console.dir(function_wrap_el);
 
     let gen = new CodeGen({ function_wrap, indent_type, space_count });
@@ -42,12 +41,7 @@ function gen_code() {
 const copy_code = document.getElementById("copy_code");
 copy_code.addEventListener("click", (e) => {
     let code = js_area.value;
-
-    navigator.clipboard.writeText(code).then(function () {
-        console.log('Async: Copying to clipboard was successful!');
-    }, function (err) {
-        console.error('Async: Could not copy text: ', err);
-    });
+    navigator.clipboard.writeText(code);
 });
 
 // Samples

@@ -24,6 +24,7 @@ h1 b {
 
 textarea {
     resize: none;
+    font-family: Consolas, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New, monospace;
 }
 
 .half {
@@ -39,7 +40,7 @@ textarea {
 .col textarea {
     box-sizing: border-box;
     width: 100%;
-    padding: 3px;
+    padding: 10px;
 }
 
 .middle {
@@ -89,4 +90,8 @@ textarea {
     .middle {
         display: none;
     }
+}
+
+#space_count {
+    width: 4ch;
 }

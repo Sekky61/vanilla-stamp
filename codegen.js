@@ -82,7 +82,7 @@ export class CodeGen {
         let target = template_content.firstElementChild; // The root node of input html
 
         if (!target) {
-            console.log("Parsing error");
+            console.error("Parsing error");
             return null;
         }
 

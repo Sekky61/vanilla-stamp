@@ -13,7 +13,6 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@300;400&display=swap&text=Vanilla-stamp"
     rel="stylesheet">
-
 </head>
 
 <body>
@@ -22,7 +21,7 @@
     <div class="half">
       <div class="left col">
         <h2>Input HTML</h2>
-        <p>Copy HTML snippet into the left text area.</p>
+        <p>Copy HTML snippet into this text area.</p>
         <textarea name="a1" id="html_area" rows="20" placeholder="Type or paste HTML component here..."></textarea>
         <fieldset id="samples">
           <legend>Samples</legend>
@@ -41,7 +40,7 @@
       </div>
       <div class="right col">
         <h2>Generated code</h2>
-        <p>JS code creating the DOM structure should appear below.</p>
+        <p>JS code creating the DOM structure will appear below.</p>
         <div class="js_area_cont">
           <textarea name="a2" id="js_area" rows="20" placeholder="Output" readonly></textarea>
           <button id="copy_code">Copy</button>
@@ -67,7 +66,22 @@
       </div>
     </div>
     <div class="about">
-      <p>About</p>
+      <h2>About</h2>
+      <p>A simple tool hosted on a website is designed to help front-end developers with their coding tasks. The tool
+        takes an input HTML and generates the corresponding JavaScript code that will generate the given HTML. This tool
+        eliminates the need for manual coding and saves time and effort for the developers. The generated JavaScript
+        code can be easily customized and optimized by the developer to meet the requirements of their project. The tool
+        is easy and user-friendly.</p>
+      <p>
+        Generated JavaScript code uses <a
+          href="https://developer.mozilla.org/en-US/docs/Web/API/Document/createElement">Document.createElement()</a>
+        method to create DOM elements, <a
+          href="https://developer.mozilla.org/en-US/docs/Web/API/Element/setAttribute">Element.setAttribute()</a> method
+        to set attributes, and <a
+          href="https://developer.mozilla.org/en-US/docs/Web/API/Node/appendChild">Node.appendChild()</a> method to
+        append child elements.
+      </p>
+      <p>Got any feedback? Raise an <a href="https://github.com/Sekky61/vanilla-stamp">issue on Github</a>.</p>
     </div>
   </div>
   <script src="script.js" type="module"></script>
