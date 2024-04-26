@@ -1,3 +1,5 @@
+![image](https://github.com/Sekky61/vanilla-stamp/assets/24541288/2a88e971-7bf5-49bd-9ffc-1821c805c2d8)
+
 # Vanilla-stamp
 
 Generate JS function to create desired HTML element.
